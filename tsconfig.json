@@ -8,6 +8,7 @@
         "@Screens/*":["./src/Screens/*"],
         "@Common/*":["./src/Common/*"],
         "@Redux/*":["./src/Redux/*"],
+        "@Control/*":["./src/Control/*"],
       }
   },
   "include": [
