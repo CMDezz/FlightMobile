@@ -7,23 +7,56 @@ import {
 import {Button, Input} from '@rneui/themed';
 import {PALLATE, PALLET_FONT} from '@Common/const';
 import { TouchableWithoutFeedback } from 'react-native';
-export default function DatePickerInputWithLabelBorder() {
-  const [date, setDate] = useState<Date | undefined>();
+import moment from 'moment';
 
-  const onChange = (
+
+interface DatePickerInputWithLabelBorderProps {
+  labelText:string,
+  placeholder?:string,
+  defaultValue?: Date | undefined,
+  onChange?:(selectedDate:Date|undefined)=>void,
+  inputContainerPropStyle?:{},
+  labelPropStyle?:{},
+  inputContentPropStyle?:{},
+  inputTextPropStyle?:{},
+  minDate?:Date,
+  maxDate?:Date,
+}
+
+export default function DatePickerInputWithLabelBorder({
+  labelText,
+  defaultValue,
+  placeholder='Chọn ngày',
+  onChange,
+  inputContainerPropStyle,
+  labelPropStyle,
+  inputContentPropStyle,
+  inputTextPropStyle,
+  minDate,
+  maxDate,
+}:DatePickerInputWithLabelBorderProps) {
+  const [date, setDate] = useState<Date | undefined>(defaultValue);
+
+  const onChangeDatePicker = (
     event: DateTimePickerEvent,
     selectedDate: Date | undefined,
   ) => {
     const currentDate = selectedDate;
     setDate(currentDate);
+    if (onChange) {
+      onChange(currentDate)
+    }
   };
 
   const showMode = (currentMode: 'date' | 'time') => {
     DateTimePickerAndroid.open({
       value: date ? date : new Date(),
-      onChange,
-      mode: currentMode,
+      onChange:onChangeDatePicker,
+      mode: 'date',
       is24Hour: true,
+      display:'default',
+      minimumDate:minDate,
+      maximumDate:maxDate
     });
   };
 
@@ -35,11 +68,11 @@ export default function DatePickerInputWithLabelBorder() {
     showMode('time');
   };
   return (
-    <View style={styles.inputContainer}>
-      <Text style={styles.label}>Chọn ngày</Text>
+    <View style={{...styles.inputContainer,...inputContainerPropStyle}}>
+      <Text style={{...styles.label,...labelPropStyle}}>{labelText}</Text>
       <TouchableWithoutFeedback onPress={showDatepicker}>
-        <View style={styles.inputContent}>
-        <Text style={styles.inputText}>{date? date?.toLocaleString():'Ngày khởi hành'}</Text>
+        <View style={{...styles.inputContent,...inputContentPropStyle}}>
+        <Text style={{...styles.inputText,...inputTextPropStyle}}>{date? moment(date).format('DD/MM/YYYY'):placeholder}</Text>
         </View>
       </TouchableWithoutFeedback>
     </View>

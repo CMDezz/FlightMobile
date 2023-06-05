@@ -15,12 +15,12 @@ interface InputSelectWithLabelBorderProps {
     labelText:string,
     inputPlaceHolder?:string,
     selectData:Record<string, any>[],
-    onSelect:(selectedItem: {}, index: number)=>void,
+    onSelect:(selectedItem: {[key:string]:string}, index: number)=>void,
     keywordLabel:string,
     keywordValue:string | number,
     renderDropdownIcon?:()=>React.ReactNode |undefined,
     dropdownIconPosition?:'left'|'right',
-    isSearch?:boolean,
+    isSearch?:boolean | undefined,
     searchPlaceHolder?:string,
 }
 
@@ -65,7 +65,7 @@ export default function InputSelectWithLabelBorder({
         rowTextStyle={{...styles.rowTextStyle,...rowTextPropStyle}}
         renderDropdownIcon={renderDropdownIcon}
         dropdownIconPosition={dropdownIconPosition}
-        search={isSearch}
+        search={isSearch ?isSearch : undefined }
         searchPlaceHolder={searchPlaceHolder}
       />
   </View>

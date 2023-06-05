@@ -2,12 +2,12 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeLayout from '@Components/HomeLayout';
-import SearchLayout from '@Components/SearchLayout';
+import SearchResultLayout from '@Components/SearchResultLayout';
 import {PALLATE} from '@Common/const';
 
 export type HomeScreenProps = {
   HomeLayout: {};
-  SearchLayout: {};
+  SearchResultLayout: {};
 };
 
 const Stack = createStackNavigator<HomeScreenProps>();
@@ -36,8 +36,8 @@ const HomeScreen: React.FC<Props> = () => {
         options={{
           headerTitle: 'Kết quả tìm kiếm',
         }}
-        name="SearchLayout"
-        component={SearchLayout}
+        name="SearchResultLayout"
+        component={SearchResultLayout}
       />
     </Stack.Navigator>
   );
